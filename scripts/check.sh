@@ -34,4 +34,12 @@ cmp dane.txt "$tmp/input.txt"
 ln "$tmp/input.txt" "$tmp/hardlink.txt"
 expect_failure 2 bash scripts/process.sh "$tmp/input.txt" "$tmp/hardlink.txt"
 cmp dane.txt "$tmp/input.txt"
+: >"$tmp/empty.txt"
+
+expect_failure 4 bash scripts/process.sh "$tmp/empty.txt" "$tmp/empty-out.txt"
+
+[[ ! -e "$tmp/empty-out.txt" ]]
+
+grep -Fq 'Pusty plik' "$tmp/stderr"
+
 printf 'PASS: kontrola lokalna\n'

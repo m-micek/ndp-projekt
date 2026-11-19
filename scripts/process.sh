@@ -41,3 +41,11 @@ if [[ -L "$output" || "$input" -ef "$output" ]]; then
     exit 2
 fi
 mv -fT -- "$tmp" "$output"
+
+[[ -s "$input" ]] || {
+
+  printf 'Pusty plik\n' >&2
+
+  exit 4
+
+}
